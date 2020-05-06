@@ -3,6 +3,7 @@ package com.ggonzales.mynotesapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -27,6 +28,13 @@ class MainActivity : AppCompatActivity() {
 
         var myNotesAdapter = NotesAdapter(notesList)
         notesListView.adapter = myNotesAdapter
+
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
 

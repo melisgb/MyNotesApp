@@ -56,6 +56,12 @@ class MainActivity : AppCompatActivity() {
         notesListView.adapter = myNotesAdapter
     }
 
+    fun deleteNote(noteID : Int){
+        val DBM = DBManager(this)
+        val selectionArgs  = arrayOf(noteID.toString())
+        val count = DBM.deleteNote("ID = ?", selectionArgs)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
 
@@ -101,6 +107,12 @@ class MainActivity : AppCompatActivity() {
             var currentNote = notesListAdapter[position]
             myView.noteTitleTxtView.text = currentNote.noteTitle.toString()
             myView.noteDescTxtView.text = currentNote.noteDesc.toString()
+
+            myView.deleteButton.setOnClickListener {
+                deleteNote(currentNote.noteID!!)
+                loadNotes("%")
+            }
+
             return myView
         }
 

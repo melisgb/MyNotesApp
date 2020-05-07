@@ -2,8 +2,10 @@ package com.ggonzales.mynotesapp
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.database.sqlite.SQLiteQueryBuilder
 import android.media.projection.MediaProjection
 import android.widget.Toast
 //when trying to access the DB locally you can access C:\Users\[user]\AppData\Local\Android\sdk\platform-tools
@@ -48,8 +50,13 @@ class DBManager{
         val ID = sqlDB!!.insert(dbTable, "", values)
         return ID
     }
-    
+
     //specifying which columns you want, the rows and also in which order to sort the results
-    fun queryDB (projection: Array<String>, )
+    fun getNotesQuery (projection: Array<String>, selection : String, selectionArgs : Array<String>, sortOrder : String) : Cursor {
+        val queryBuilder = SQLiteQueryBuilder()
+        queryBuilder.tables = dbTable
+        val cursor = queryBuilder.query(sqlDB, projection, selection, selectionArgs, null, null, sortOrder)
+        return cursor
+    }
 }
 

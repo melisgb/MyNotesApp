@@ -18,12 +18,39 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-    //Loading notes
-        notesList.add(Note(1, "Melissa", "Melissa es inteligente"))
-        notesList.add(Note(2, "Carlos", "Carlos es inteligente"))
-        notesList.add(Note(3, "Isabel", "Isabel es inteligente"))
-        notesList.add(Note(4, "Elena", "Elena es inteligente"))
+        //Loading hardcoded notes
+//        notesList.add(Note(1, "Melissa", "Melissa es inteligente"))
+//        notesList.add(Note(2, "Carlos", "Carlos es inteligente"))
+//        notesList.add(Note(3, "Isabel", "Isabel es inteligente"))
+//        notesList.add(Note(4, "Elena", "Elena es inteligente"))
 
+        //Loading notes from DB
+        loadNotes("%")
+
+//
+//        var myNotesAdapter = NotesAdapter(notesList)
+//        notesListView.adapter = myNotesAdapter
+    }
+
+    fun loadNotes(title : String){
+        val DBM = DBManager(this)
+        val projections = arrayOf("ID", "title", "desc")
+        val selectionArgs  = arrayOf(title)
+        val cursor = DBM.getNotesQuery(projections, "Title like ?", selectionArgs, "desc")
+        notesList.clear()
+        if(cursor.moveToFirst()){
+            do{
+                notesList.add(
+                    Note(
+                        noteID = cursor.getInt(cursor.getColumnIndex("ID")),
+                        noteTitle = cursor.getString(cursor.getColumnIndex("title")),
+                        noteDesc = cursor.getString(cursor.getColumnIndex("desc"))
+                    )
+                )
+
+
+            }while (cursor.moveToNext())
+        }
 
         var myNotesAdapter = NotesAdapter(notesList)
         notesListView.adapter = myNotesAdapter
@@ -38,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener( object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Toast.makeText(applicationContext, query, Toast.LENGTH_SHORT).show()
-                //TODO: Search DATABASE
+                loadNotes("%$query%")
                 return false
             }
 
@@ -56,9 +83,6 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this, CreateNoteActivity :: class.java )
                     startActivity(intent)
                 }
-                R.id.search_note_ic -> {
-
-                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -75,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             var myView = layoutInflater.inflate(R.layout.note_element, null)
 
             var currentNote = notesListAdapter[position]
-            myView.noteTitleTxtView.text = currentNote.noteName.toString()
+            myView.noteTitleTxtView.text = currentNote.noteTitle.toString()
             myView.noteDescTxtView.text = currentNote.noteDesc.toString()
             return myView
         }

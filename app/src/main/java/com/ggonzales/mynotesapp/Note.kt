@@ -2,12 +2,12 @@ package com.ggonzales.mynotesapp
 
 class Note{
     var noteID : Int? = null
-    var noteName : String? = null
+    var noteTitle : String? = null
     var noteDesc : String? = null
 
-    constructor(noteID : Int, noteName: String, noteDesc : String){
+    constructor(noteID : Int, noteTitle: String, noteDesc : String){
         this.noteID = noteID
-        this.noteName = noteName
+        this.noteTitle = noteTitle
         this.noteDesc = noteDesc
     }
 }

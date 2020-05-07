@@ -1,11 +1,9 @@
 package com.ggonzales.mynotesapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.ggonzales.mynotesapp.Note
@@ -28,13 +26,26 @@ class MainActivity : AppCompatActivity() {
 
         var myNotesAdapter = NotesAdapter(notesList)
         notesListView.adapter = myNotesAdapter
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item!=null){
+            when(item.itemId){
+                R.id.add_note_ic -> {
+                    val intent = Intent(this, CreateNoteActivity :: class.java )
+                    startActivity(intent)
+                }
+                R.id.search_note_ic -> {
+
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

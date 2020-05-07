@@ -38,6 +38,8 @@
         android:layout_marginBottom="80dp"
         android:background="@drawable/custom_button"
         android:text="@string/add_note"
+        android:textSize="24sp"
+        android:textColor="@color/whiteColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

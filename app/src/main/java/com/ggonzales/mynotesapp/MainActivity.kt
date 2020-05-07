@@ -1,15 +1,16 @@
 package com.ggonzales.mynotesapp
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import android.widget.BaseAdapter
-import android.widget.TextView
-import com.ggonzales.mynotesapp.Note
+import android.widget.SearchView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.notes_view.*
-import kotlinx.android.synthetic.main.notes_view.view.*
+import kotlinx.android.synthetic.main.note_element.view.*
 
 class MainActivity : AppCompatActivity() {
     var notesList = ArrayList<Note>()
@@ -30,6 +31,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
+
+        val searchView = menu!!.findItem(R.id.search_note_ic).actionView as SearchView
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.setOnQueryTextListener( object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Toast.makeText(applicationContext, query, Toast.LENGTH_SHORT).show()
+                //TODO: Search DATABASE
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -56,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            var myView = layoutInflater.inflate(R.layout.notes_view, null)
+            var myView = layoutInflater.inflate(R.layout.note_element, null)
 
             var currentNote = notesListAdapter[position]
             myView.noteTitleTxtView.text = currentNote.noteName.toString()

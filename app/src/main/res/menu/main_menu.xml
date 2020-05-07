@@ -10,6 +10,7 @@
     <item
         android:id="@+id/search_note_ic"
         android:icon="@drawable/search_icon"
+        android:iconTint="@color/whiteColor"
         android:title="Search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />

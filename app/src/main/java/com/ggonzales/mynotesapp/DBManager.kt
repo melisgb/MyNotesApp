@@ -58,9 +58,15 @@ class DBManager{
         val cursor = queryBuilder.query(sqlDB, projection, selection, selectionArgs, null, null, sortOrder)
         return cursor
     }
-    fun deleteNote (selection : String, selectionArgs : Array<String>) : Int {
-        val qty = sqlDB!!.delete(dbTable, selection, selectionArgs)
-        return qty
+
+    fun deleteNote (selection : String, selectionArgs : Array<String>) : Long {
+        val countRecDel = sqlDB!!.delete(dbTable, selection, selectionArgs)
+        return countRecDel.toLong()
+    }
+
+    fun updateNote (values : ContentValues, selection : String, selectionArgs: Array<String>) : Long {
+        val countRecUpd = sqlDB!!.update(dbTable, values, selection, selectionArgs)
+        return countRecUpd.toLong()
     }
 }
 

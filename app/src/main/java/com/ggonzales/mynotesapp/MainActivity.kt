@@ -18,18 +18,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Loading hardcoded notes
-//        notesList.add(Note(1, "Melissa", "Melissa es inteligente"))
-//        notesList.add(Note(2, "Carlos", "Carlos es inteligente"))
-//        notesList.add(Note(3, "Isabel", "Isabel es inteligente"))
-//        notesList.add(Note(4, "Elena", "Elena es inteligente"))
-
         //Loading notes from DB
         loadNotes("%")
+    }
 
-//
-//        var myNotesAdapter = NotesAdapter(notesList)
-//        notesListView.adapter = myNotesAdapter
+    override fun onResume(){
+        super.onResume()
+        loadNotes("%")
     }
 
     fun loadNotes(title : String){
@@ -42,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             do{
                 notesList.add(
                     Note(
-                        noteID = cursor.getInt(cursor.getColumnIndex("ID")),
+                        noteID = cursor.getLong(cursor.getColumnIndex("ID")),
                         noteTitle = cursor.getString(cursor.getColumnIndex("title")),
                         noteDesc = cursor.getString(cursor.getColumnIndex("desc"))
                     )
@@ -56,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         notesListView.adapter = myNotesAdapter
     }
 
-    fun deleteNote(noteID : Int){
+    fun deleteNote(noteID : Long){
         val DBM = DBManager(this)
         val selectionArgs  = arrayOf(noteID.toString())
         val count = DBM.deleteNote("ID = ?", selectionArgs)
@@ -111,6 +106,13 @@ class MainActivity : AppCompatActivity() {
             myView.deleteButton.setOnClickListener {
                 deleteNote(currentNote.noteID!!)
                 loadNotes("%")
+            }
+            myView.editButton.setOnClickListener {
+                val intent = Intent(applicationContext, CreateNoteActivity :: class.java )
+                intent.putExtra("ID", currentNote.noteID)
+                intent.putExtra("title", currentNote.noteTitle)
+                intent.putExtra("desc", currentNote.noteDesc)
+                startActivity(intent)
             }
 
             return myView

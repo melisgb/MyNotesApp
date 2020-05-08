@@ -24,7 +24,7 @@ class CreateNoteActivity : AppCompatActivity() {
             val noteDesc = intentBundle!!.getString("desc")
             noteTitleEditText.setText(noteTitle)
             noteDescEditText.setText(noteDesc)
-            createNoteButton.text = "UPDATE"
+            createNoteButton.text = getString(R.string.update_note)
         }
 
 

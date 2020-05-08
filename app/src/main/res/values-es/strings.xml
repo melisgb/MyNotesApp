@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NotasPersonales</string>
+    <string name="insert_title">Inserta un titulo</string>
+    <string name="insert_description">Inserta una descripcion</string>
+    <string name="add_note">AGREGAR NOTA</string>
+    <string name="update_note">ACTUALIZAR</string>
+</resources>

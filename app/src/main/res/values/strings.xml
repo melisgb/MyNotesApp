@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">MyNotesApp</string>
+    <string name="app_name">Custom Notes</string>
     <string name="insert_title">Insert a title</string>
     <string name="insert_description">Insert a description</string>
     <string name="add_note">ADD NOTE</string>
+    <string name="update_note">UPDATE</string>
 </resources>

@@ -20,12 +20,39 @@ class MainActivity : AppCompatActivity() {
 
         //Loading notes from DB
         loadNotes("%")
+        Toast.makeText(this, "ACT ON CREATE", Toast.LENGTH_LONG).show()
     }
 
+    override fun onStart() {
+        Toast.makeText(this, "ACT ON START", Toast.LENGTH_LONG).show()
+        super.onStart()
+    }
+    //when the user returns to this activity. Example when I was creating or modifying a note and went back to Main Activity
     override fun onResume(){
+        Toast.makeText(this, "ACT ON RESUME", Toast.LENGTH_LONG).show()
         super.onResume()
         loadNotes("%")
     }
+    //another activity comes to front
+    override fun onPause(){
+        Toast.makeText(this, "ACT ON PAUSE", Toast.LENGTH_LONG).show()
+        super.onPause()
+    }
+    //activity no longer visible
+    override fun onStop() {
+        Toast.makeText(this, "ACT ON STOP", Toast.LENGTH_LONG).show()
+        super.onStop()
+    }
+    //activity is destroyed by system
+    override fun onDestroy(){
+        Toast.makeText(this, "ACT ON DESTROY", Toast.LENGTH_LONG).show()
+        super.onDestroy()
+    }
+    override fun onRestart(){
+        Toast.makeText(this, "ACT ON RESTART", Toast.LENGTH_LONG).show()
+        super.onRestart()
+    }
+
 
     fun loadNotes(title : String){
         val DBM = DBManager(this)
